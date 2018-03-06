@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  comment: MyString
+  created_by: MyString
+
+two:
+  comment: MyString
+  created_by: MyString
