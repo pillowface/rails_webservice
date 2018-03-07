@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get '/login' => "user#new_login", as: :login_view
   post '/login' => "user#login", as: :login_post
 
   get '/users' => "user#index", as: :get_users

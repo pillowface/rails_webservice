@@ -1,9 +1,5 @@
 class UserController < ApplicationController
 
-  def new_login
-    binding.pry
-  end
-
   def login
     new_token = request_access_token
     return json_response(ERROR, :unprocessable_entity) if new_token.nil?
