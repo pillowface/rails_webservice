@@ -1,6 +1,6 @@
 # app/controllers/concerns/api_helper.rb
 module ApiHelper
-  API_URL = "http://host20016.proxy.infralabs.cs.ui.ac.id/proxy".freeze
+  API_URL = "http://172.22.0.2".freeze
   ERROR = {error: "error", description: "deskripsi error"}.freeze
 
   def request_access_token
