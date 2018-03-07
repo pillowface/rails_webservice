@@ -6,14 +6,19 @@ class UserController < ApplicationController
 
   def login
     new_token = request_access_token
-    save_token(new_token)
-    new_user = User.new
-    new_user.username = params[:username]
-    new_user.save!
-    json_response({status: "ok", token: "token-access-bearer"})
+    return json_response(ERROR, :unprocessable_entity) if new_token.nil?
+    user = User.find_by_username params[:username]
+    if user.nil?
+      new_user = User.new
+      new_user.username = params[:username]
+      new_user.save!
+    end
+    json_response({status: "ok", token: new_token})
   end
 
   def index
+    response = verify_access_token
+    return json_response(ERROR, :unauthorized) if response.nil?
     users = User.select(:id, :display_name).take(params[:limit])
     json_response(
       status: "ok",
@@ -27,7 +32,7 @@ class UserController < ApplicationController
   def create
     display_name = params[:displayName]
     response = verify_access_token
-    return json_response({error: "error", description: "deskripsi error"}, :unauthorized) if response.nil?
+    return json_response(ERROR, :unauthorized) if response.nil?
     if response["user_id"]
       user = User.find_by_username response["user_id"]
       user.display_name = display_name

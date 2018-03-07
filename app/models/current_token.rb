@@ -1,2 +1,0 @@
-class CurrentToken < ApplicationRecord
-end

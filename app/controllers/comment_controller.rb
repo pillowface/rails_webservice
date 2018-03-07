@@ -21,19 +21,19 @@ class CommentController < ApplicationController
 
   def update
     response = verify_access_token
-    return json_response({error: "error", description: "deskripsi error"}, :unauthorized) if response.nil?
+    return json_response(ERROR, :unauthorized) if response.nil?
     comment = Comment.find_by_id params[:id]
     comment.comment = params[:comment]
     comment.save!
     json_response(
-        status: "ok",
-        data: comment
+      status: "ok",
+      data: comment
     )
   end
 
   def destroy
     response = verify_access_token
-    return json_response({error: "error", description: "deskripsi error"}, :unauthorized) if response.nil?
+    return json_response(ERROR, :unauthorized) if response.nil?
     comment = Comment.find_by_id params[:id]
     comment.destroy!
     json_response(
@@ -44,7 +44,7 @@ class CommentController < ApplicationController
   def create
     content = params[:comment]
     response = verify_access_token
-    return json_response({error: "error", description: "deskripsi error"}, :unauthorized) if response.nil?
+    return json_response(ERROR, :unauthorized) if response.nil?
     if response["user_id"]
       user = User.find_by_username response["user_id"]
       comment = Comment.new
