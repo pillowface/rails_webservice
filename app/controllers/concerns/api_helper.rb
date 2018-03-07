@@ -24,10 +24,11 @@ module ApiHelper
 
   def verify_access_token
     url = "#{API_URL}/oauth/resource"
-    headers = { authorization: "Bearer #{request.headers["authorization"]}"}
+    headers = { authorization: "#{request.headers["authorization"]}"}
     begin
       response = RestClient.get url, headers
       response_body = JSON.parse response.body
+      raise RestClient::Exception if response_body["error"]
       return response_body
     rescue RestClient::Exception => e
       return nil
